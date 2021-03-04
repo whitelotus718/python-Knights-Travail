@@ -1,0 +1,57 @@
+'use strict';
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('Users', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      username: {
+        type: Sequelize.STRING(30),
+        allowNull: false,
+        unique: true,
+      },
+      email: {
+        type: Sequelize.STRING(256),
+        allowNull: false,
+        unique: true,
+      },
+      hashedPassword: {
+        type: Sequelize.STRING.BINARY,
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
+      }
+    });
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('Users');
+  }
+};
+
+
+
+////
+
+defaultValue: Sequelize.fn("now"),
+
+
+Show.belongsTo(models.User, { foreignKey: "userId" });
+
+
+
+// generate Shows model
+npx sequelize-cli model:generate --name Show --attributes userId:integer,artistName:string,date:string,genre:string,cityId:integer,price:integer,partySize:string,title:text,info:text,imageURL:string,rating:integer,youtubeURL:string
+
+// generate Users model
+npx sequelize-cli model:generate --name User --attributes username:string,email:string,hashedPassword:string
